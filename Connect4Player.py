@@ -3,14 +3,14 @@
 # 
 # Written January 2021
 
-import math.inf as infinity
-
-
 class Board:
     
-    def __init__(self):
+    def __init__(self, player1, player2):
+        
         self.currentState = [[0 for _ in range(7)] for _ in range(7)]
         self.heights = [0 for _ in range(7)]
+        self.symbolP1 = player1
+        self.symbolP2 = player2
     
     def getState(self):
         return(self.currentState)
@@ -24,15 +24,15 @@ class Board:
     
     def setMove(self, pos, player):
         
-        self.currentState[self.heights[pos]][pos] = player
+        self.currentState[6-self.heights[pos]][pos] = player
         
         self.heights[pos] += 1
     
-    def render(self, symbolP1, symbolP2):
+    def render(self):
         
         chars = {
-            -1: symbolP1,
-            1: symbolP2,
+            1: self.symbolP1,
+            -1: self.symbolP2,
             0: "-"
             }
         
@@ -51,16 +51,7 @@ class Board:
     
         return over
     
-    def checkWinner(self,player):
-        
-        for row in range(7):
-            for col in range(7):
-                if self.currentState[row][col] == player:
-                    won = checkWin(row,col,player)
-                    if won:
-                        return True
-        
-        return False
+    
     
     def checkWin(self,row,col,player):
         
@@ -71,10 +62,74 @@ class Board:
                 return True
         except:
             pass
+        
+        try:
+            if (self.currentState[row-1][col+1] == player 
+                    and self.currentState[row-2][col+2] == player 
+                    and self.currentState[row-3][col+3] == player):
+                return True
+        except:
+            pass        
+        
+        try:
+            if (self.currentState[row][col+1] == player 
+                    and self.currentState[row][col+2] == player 
+                    and self.currentState[row][col+3] == player):
+                return True
+        except:
+            pass
+        
+        try:
+            if (self.currentState[row+1][col+1] == player 
+                    and self.currentState[row+2][col+2] == player 
+                    and self.currentState[row+3][col+3] == player):
+                return True
+        except:
+            pass        
+        
+        try:
+            if (self.currentState[row+1][col] == player 
+                    and self.currentState[row+2][col] == player 
+                    and self.currentState[row+3][col] == player):
+                return True
+        except:
+            pass        
+        
+        try:
+            if (self.currentState[row+1][col-1] == player 
+                    and self.currentState[row+2][col-2] == player 
+                    and self.currentState[row+3][col-3] == player):
+                return True
+        except:
+            pass        
+        
+        try:
+            if (self.currentState[row][col-1] == player 
+                    and self.currentState[row][col-2] == player 
+                    and self.currentState[row][col-3] == player):
+                return True
+        except:
+            pass 
+        
+        try:
+            if (self.currentState[row-1][col-1] == player 
+                    and self.currentState[row-2][col-2] == player 
+                    and self.currentState[row-3][col-3] == player):
+                return True
+        except:
+            pass        
+        
+    
+    def checkWinner(self,player):
 
-        
-        
-        
+        for row in range(7):
+            for col in range(7):
+                if self.currentState[row][col] == player:
+                    won = self.checkWin(row,col,player)
+                    if won:
+                        return True
+
+        return False    
         
         
         
