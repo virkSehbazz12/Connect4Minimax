@@ -2,6 +2,12 @@
 # Author: Sehbazz Virk
 # 
 # Written January 2021
+# TODO: Write evalState function in Board class
+# TODO: Write getMove function for Bot (minimax)
+# TODO: Documentation and comments!
+# Potential TODO: Write driver program to pit two bots against eachother?
+# (Maybe the above could be used to determine the best point values for each
+# length of connection in the evalState function)
 
 class Board:
     
